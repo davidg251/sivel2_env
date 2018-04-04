@@ -1,0 +1,39 @@
+version: '3'
+services:
+  sivel2_backend:
+    container_name: sivel2_backend
+    build: ./sivel2
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./sivel2:/code
+      - rubygems:/usr/local/bundle
+    links:
+      - sivel2_database
+    tty: true
+    environment:
+      - LANG=C.UTF-8
+      - LC_ALL=C.UTF-8
+  #frontend:
+  #  container_name: frontend
+  #  build: ./frontend
+  #  volumes:
+  #    - ./frontend:/code
+  #  ports:
+  #    - "4200:4200"
+  #  links:
+  #    - backend
+  #  tty: true
+  sivel2_database:
+    container_name: sivel2_database
+    build: ./db
+    restart: always
+    volumes:
+      - ./db:/code
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+volumes:
+  rubygems:
