@@ -1,14 +1,15 @@
 . ./config.sh #include the config file
 
-if $RUNNED;
+if [ ! -d $DIRECTORY_BACKEND ];
 then
-  mkdir sivel && cd sivel
-  git clone $FRONTEND_REPO
-  cd ..
-  mkdir sivel && cd sivel
-  git clone $BACKEND_REPO
-  sed 's/true/false/' config.sh > config.sh
-  docker-compose up
+  mkdir $DIRECTORY_BACKEND && cd $DIRECTORY_BACKEND
+  #git clone $FRONTEND_REPO
+  #cd ..
+  #mkdir sivel && cd sivel
+  git clone $BACKEND_REPO .
+  git checkout docker_env
+  #docker-compose up
 else
-  docker-compose up
+  echo $DIRECTORY_BACKEND
+  #docker-compose up
 fi
