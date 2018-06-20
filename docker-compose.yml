@@ -8,6 +8,7 @@ services:
     volumes:
       - ./sivel2/:/code/
       - rubygems:/usr/local/bundle
+      - ./sivel2_api/:/sivel2_api
     links:
       - sivel2_database
     tty: true
@@ -15,20 +16,20 @@ services:
       - LANG=C.UTF-8
       - LC_ALL=C.UTF-8
     command: rails s 
-  #frontend:
-  #  container_name: frontend
-  #  build: ./frontend
-  #  volumes:
-  #    - ./frontend:/code
-  #  ports:
-  #    - "4200:4200"
-  #  links:
-  #    - backend
-  #  tty: true
+  sivel2_frontend:
+    container_name: sivel2_frontend
+    build: ./sivel2_frontend
+    volumes:
+      - ./sivel2_frontend:/code
+    ports:
+      - "4000:4000"
+    links:
+      - sivel2_backend
+    tty: true
+    command: yarn start
   sivel2_database:
     container_name: sivel2_database
     build: ./db
-    restart: always
     volumes:
       - ./db/:/code
     ports:
