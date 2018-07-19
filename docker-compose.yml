@@ -5,6 +5,7 @@ services:
     build: ./sivel2
     ports:
       - "3000:3000"
+      - "3001:3001"
     volumes:
       - ./sivel2/:/code/
       - rubygems:/usr/local/bundle
@@ -25,7 +26,7 @@ services:
       - "4000:4000"
     links:
       - sivel2_backend
-    tty: true
+    tty: false
     command: yarn start
   sivel2_database:
     container_name: sivel2_database
@@ -37,5 +38,6 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
+    tty: true
 volumes:
   rubygems:
